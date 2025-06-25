@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from "./Home.module.scss";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
   const [name, setName] = useState("");
   const [submittedName, setSubmittedName] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (step === 0) {
@@ -32,7 +34,7 @@ const Home = () => {
   };
 
   const handleVerifyClick = () => {
-    window.location.href = "/login";
+    navigate('/login');  // redireciona para /login usando react-router-dom
   };
 
   return (
