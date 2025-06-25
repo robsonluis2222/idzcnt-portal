@@ -1,0 +1,254 @@
+.chat{
+  width: 100%;
+}
+.navbar{
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(243, 243, 243);
+  img{
+    width: 120px;
+    margin-left: 20px;
+  }
+  i{
+    color: #1451B4;
+    padding: 5px;
+    font-size: 20px;
+  }
+}
+.entrarBtn{
+  background-color: #1451B4;
+  color: white;
+  padding: 8px;
+  padding-inline: 10px;
+  margin: 10px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+
+.path{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 5px;
+  margin-left: 5px;
+  i{
+    color: #1451B4;
+    font-size: 23px;
+    margin-right: 10px ;
+  }
+}
+
+.chatbot{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(235, 235, 235);
+
+  .chatt{
+    height: 100vh;
+    width: 500px;
+    max-width: 90%;
+    background-color: white;
+  }
+}
+/* Mensagem do bot */
+.botMessage {
+  display: flex;
+  align-items: flex-start;
+  margin: 1rem 0;
+
+  img.avatar {
+    width: 50px;
+    height: 20px;
+    margin-right: 0.75rem;
+  }
+
+  p {
+    background-color: #E0E0E0;
+    padding: 0.8rem 1rem;
+    border-radius: 15px;
+    max-width: 80%;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}
+
+/* Mensagem do usuário */
+.userMessage {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+
+  p {
+    background-color: #007BFF;
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 15px;
+    max-width: 80%;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}
+
+/* Input e botão */
+.userInput {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+
+  button {
+    padding: 0.6rem 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+/* Botão grande de ação */
+.actionButton {
+  margin-top: 1rem;
+  span {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+.typing {
+  display: flex;
+  gap: 4px;
+  height: 1.2rem;
+  align-items: center;
+  justify-content: flex-start;
+
+  span {
+    width: 6px;
+    height: 6px;
+    background-color: #555;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1.4s infinite both;
+  }
+
+  span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 1rem 0;
+  gap: 0.5rem;
+  padding-left: 60px; // alinhar com a fala do bot
+
+  button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.6rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: #1451B4;
+      color: white;
+      border-color: #1451B4;
+    }
+  }
+}
+.botMessage {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  p {
+    background: #e5e5ea;
+    padding: 8px 12px;
+    border-radius: 12px;
+    max-width: 70%;
+    margin: 0;
+  }
+}
+
+.botImage {
+  width: 50px;
+  height: 20px;
+  margin-top: 4px;
+}
+.pixInputContainer {
+  display: flex;
+  gap: 8px;                // Espaço entre input e botão
+  margin-top: 16px;
+  padding: 8px;
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  align-items: center;
+}
+
+.pixInputContainer input {
+  flex: 1;                 // Ocupa o máximo possível
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.pixInputContainer input:focus {
+  border-color: #0066ff;
+  outline: none;
+  box-shadow: 0 0 6px #80b3ff;
+}
+
+.pixInputContainer button {
+  padding: 10px 20px;
+  background-color: #0066ff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pixInputContainer button:hover {
+  background-color: #004bb5;
+}
