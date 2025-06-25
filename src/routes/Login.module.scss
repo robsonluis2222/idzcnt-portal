@@ -1,0 +1,149 @@
+.gov{
+  width: 100%;
+}
+.navbar{
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(243, 243, 243);
+  img{
+    width: 120px;
+    margin-left: 20px;
+  }
+  i{
+    color: #1451B4;
+    padding: 5px;
+    font-size: 20px;
+  }
+}
+.entrarBtn{
+  background-color: #1451B4;
+  color: white;
+  padding: 8px;
+  padding-inline: 10px;
+  margin: 10px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+
+.path{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 5px;
+  margin-left: 5px;
+  i{
+    color: #1451B4;
+    font-size: 23px;
+    margin-right: 10px ;
+  }
+}
+
+.slider{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  img {
+    width: auto; // padrão para desktop ou telas maiores
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+  .titleForm{
+    font-size: 18px;
+    color: #143e81;
+    font-weight: 600;
+  }
+  .f1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    color: rgb(39, 39, 39);
+    font-weight: 500;
+    img{
+      width: 20px;
+      margin-right: 7px;
+    }
+  }
+  .f2 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+
+  span {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  input {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.6rem 1rem;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.2s;
+
+    &:focus {
+      border-color: #007BFF;
+    }
+  }
+
+  /* Estilo do span como botão */
+  span:last-child {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+    background-color: #1451B4;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s, transform 0.1s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+}
+
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  margin-top: 40px;
+  gap: 10px;
+  background-color: #0B1A38;
+  padding: 40px;
+  color: white;
+  img{
+    width: 120px;
+  }
+}
