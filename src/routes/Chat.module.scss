@@ -252,3 +252,72 @@
 .pixInputContainer button:hover {
   background-color: #004bb5;
 }
+.audioMessage {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #f0f7ff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 500;
+  color: #005a9c;
+
+  button {
+    padding: 4px 10px;
+    border: none;
+    background: #005a9c;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+      background: #004080;
+    }
+  }
+}
+.actionButton {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  button {
+    width: 90%;
+    max-width: 400px;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:first-child {
+      background-color: #007bff;
+      color: white;
+
+      &:hover {
+        background-color: #0062cc;
+      }
+    }
+
+    &.secondaryButton {
+      background-color: #f1f1f1;
+      color: #333;
+      border: 1px solid #ccc;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+}
+.comprovante-img {
+  width: 10%;
+  max-width: 100px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}

